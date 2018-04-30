@@ -1,0 +1,16 @@
+stages:
+  - Build
+  - Test
+
+Build:
+  stage: Build
+  script: docker build . -t udkyo/terrakvm
+
+Test:
+  stage: Test
+  script: >
+    docker run --rm -e PUID=$(id -u) -v $(pwd)/tests:/terraform -v /var/run/libvirt/libvirt-sock:/libvirt-sock udkyo/terrakvm sh -c
+    "RETCODE=0;  
+    terraform init && yes yes | terraform apply || RETCODE=1;
+    yes yes | terraform destroy || RETCODE=1;
+    exit $RETCODE"
