@@ -2,4 +2,4 @@
 
 ln -s /libvirt-sock /var/run/libvirt/libvirt-sock
 
-exec su -c "$@" user
+exec "$@"
