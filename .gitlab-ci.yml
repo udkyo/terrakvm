@@ -9,7 +9,7 @@ Build:
 Test:
   stage: Test
   script: >
-    docker run --rm -e PUID=$(id -u) -v $(pwd)/tests:/terraform -v /var/run/libvirt/libvirt-sock:/libvirt-sock udkyo/terrakvm sh -c
+    docker run --rm -v $(pwd)/tests:/terraform -v /var/run/libvirt/libvirt-sock:/libvirt-sock udkyo/terrakvm sh -c
     "RETCODE=0;  
     terraform init && yes yes | terraform apply || RETCODE=1;
     yes yes | terraform destroy || RETCODE=1;
